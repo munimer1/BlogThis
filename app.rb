@@ -48,7 +48,7 @@ post '/new_user' do
 	redirect "/show"
 end
 
-post '/profile' do
+post '/blog' do
 	user = User.find(session[:user_id])
 	Blog.create(title: params[:title], category: params[:category], content: params[:content], user_id: user.id)
 	redirect "/"
@@ -63,7 +63,7 @@ end
 post '/edit_user' do
 	user = User.find(session[:user_id])
 	user.update(password: params[:password], city: params[:city], school: params[:school])
-	redirect '/'
+	redirect '/show'
 end
 
 get '/show' do
