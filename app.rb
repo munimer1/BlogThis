@@ -10,8 +10,12 @@ set :database, { adapter: "sqlite3", database: "development.sqlite3" }
 
 enable :sessions
 
+def current_user
+  @current_user ||= User.find_by_id(session[:user_id])
+end
 
 get '/' do
+	@blogs = Blog.all
   erb :index
 end
 
@@ -24,18 +28,41 @@ post '/login' do
 	user = User.find_by(username: params[:username])
 	if user && user.password == params[:password]
 		session[:user_id] = user.id
-		redirect '/'
+		redirect '/show'
 	else
 		redirect '/signup'
 	end
 end
 
-post '/logout' do
+get '/logout' do
 	session[:user_id] = nil
 	redirect '/signup'
 end
 
 post '/new_user' do
-	User.create(username: params[:username], password: params[:password], city: params[:city], school: params[:school])
+	user = User.create(username: params[:username], password: params[:password], city: params[:city], school: params[:school])
+	session[:user_id] = user.id
+	redirect "/show"
+end
+
+post '/profile' do
+	user = User.find(session[:user_id])
+	Blog.create(title: params[:title], category: params[:category], content: params[:content], user_id: user.id)
 	redirect "/"
+end
+
+post '/destroy_user' do
+	user = User.find(session[:user_id])
+	user.destroy
+	redirect '/signup'
+end
+
+post '/edit_user' do
+	user = User.find(session[:user_id])
+	user.update(password: params[:password], city: params[:city], school: params[:school])
+	redirect '/'
+end
+
+get '/show' do
+  erb :show
 end

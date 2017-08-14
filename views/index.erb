@@ -1,5 +1,13 @@
 home
 
-<form action="/logout" method="post">
-	<input type="submit" value="Logout">
-</form>
+
+
+<% @blogs.last(10).each do |blog| %>
+
+<div class="title"><%= blog.title %></div>
+<div class="category"><%= blog.category %></div>
+<div class="content"><%= blog.content %></div>
+<div><p>User ID: <%= blog.user_id %> </p></div>
+
+
+<% end %>
