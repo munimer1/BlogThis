@@ -8,6 +8,7 @@ gem 'activerecord'
 gem 'sinatra-activerecord'
 gem 'rake'
 gem 'sinatra-flash'
+<<<<<<< HEAD
 
 group :development do
   gem 'sqlite3'
@@ -17,3 +18,7 @@ end
 group :production do
   gem 'pg'
 end
+=======
+gem 'sqlite3'
+gem 'pry'
+>>>>>>> b80e768f0d95256b256328e40ff89a4fe59a7d93

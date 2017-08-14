@@ -38,6 +38,13 @@
       <% end %>
     </div>
 
+    <% if current_user %>
+        <a href="/logout">Logout</a>
+      <% else %>
+        <a href="/signup">Signup/Login</a>
+    <% end %>
+
+
     <%= yield %>
     <p>Current user: <%= current_user ? current_user.username : "no one :(" %> </p>
   </body>
